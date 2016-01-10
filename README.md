@@ -9,7 +9,7 @@ This is a single page app that displays an unsorted bar chart. The user can sele
 * unknown
   
 ### To Do - Improvements
-Make the display fit to smaller screen heights.
+* Make the display fit to smaller screen heights.
   
 ### To Do - New Features
 * add more interesting sorting algorithms (QuickSort, ShellSort, StoogeSort)
