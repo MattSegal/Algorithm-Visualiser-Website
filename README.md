@@ -6,10 +6,10 @@
 This is a single page app that displays an unsorted bar chart. The user can select and run a sorting algorithm on the chart.
   
 ### Current Bugs
-* ...are all features
+* unknown
   
 ### To Do - Improvements
-* none at the moment
+Make the display fit to smaller screen heights.
   
 ### To Do - New Features
 * add more interesting sorting algorithms (QuickSort, ShellSort, StoogeSort)
