@@ -3,13 +3,14 @@
 [View Live Website Here](http://mattsegal.xyz/sort)
 
 ### Overview
-This is a single page app that displays an unsorted bar chart. The user can select and run a sorting algorithm on the chart.
+This is a single page app that displays an unsorted bar chart. The user can select and run a sorting algorithm on the chart. I decided to write this app without jQuery to see what it would be like. It wasn't as hard as I thought it would be. Unfotunately it currently uses ES6 generators and requires the latest version of Chrome to run.
   
 ### Current Bugs
-* ...are all features
+* unknown
   
 ### To Do - Improvements
-* none at the moment
+* Make the display fit to smaller screen heights.
   
 ### To Do - New Features
 * add more interesting sorting algorithms (QuickSort, ShellSort, StoogeSort)
+

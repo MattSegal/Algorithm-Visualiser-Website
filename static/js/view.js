@@ -113,7 +113,7 @@ var chartGridView = {
 }
 
 var chartView = {
-	chartHeight : 500, //pixels
+	chartHeight : 450, //pixels - refactor this into somewhere more visible
 	chartEl : document.getElementsByClassName('chart')[0],
 	barStyleClass : 'thin-bar',
 	setBarHeight : function(el,val,maxVal) {
@@ -121,7 +121,9 @@ var chartView = {
 		if (typeof el === 'number') { 
 			el = document.getElementById(el)
 		}
-		el.style.height = this.chartHeight * (val / maxVal)
+		var elHeight = this.chartHeight * (val / maxVal)
+		elHeight = elHeight.toString()
+		el.style.height = elHeight+"px"
 	},
 	setBarOrder : function(el,order) {
 		el.style.order = order

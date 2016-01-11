@@ -1,3 +1,4 @@
+
 var Model = {
 	// array data
 	array : [],
@@ -16,16 +17,12 @@ var Model = {
 	randomArray : function() {
 		this.array = Array(this.arrayLength)
 			.fill(0)
-			.map(()=>
-				Math.ceil(this.maxValue*Math.random())
-			)
+			.map(()=>Math.ceil(this.maxValue*Math.random()))
 	},
 	reverseArray : function() {
 		this.array = Array(this.arrayLength)
 			.fill(0)
-			.map(()=>
-				Math.ceil(this.maxValue*Math.random())
-			)
+			.map(()=>Math.ceil(this.maxValue*Math.random()))
 		this.array = mergeSort(this.array).reverse()
 	},
 	sortMethods : {

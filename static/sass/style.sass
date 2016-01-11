@@ -10,12 +10,12 @@ html, body
 	padding: 0
 	
 body
-	background-color: #999
+	background-color: #ddd
 	font-family: 'Open Sans', sans-serif
 
 $panel-bg-color:  #ddd
 $panel-width: 600px
-$chart-height: 500px
+$chart-height: 450px
 
 header
 	background-color: $panel-bg-color
@@ -32,25 +32,29 @@ header
 	width: $panel-width
 	height: $chart-height
 	margin: 10px auto 0 auto 
-
+	position: relative
 	display: flex
 	justify-content: space-around
 	align-items: flex-end
 
 .chart-grid
+	// border: 2px solid red
 	position: absolute
+	top: 0px
 	box-sizing: border-box
 	width: $panel-width
 	height: $chart-height
 	cursor: pointer
 	display: flex
 	.col
+		// border: 1px solid red
 		box-sizing: border-box
 		height: $chart-height
 		width: 100%
 		display: flex
 		flex-direction: column-reverse
 	.row
+		// border: 1px solid red
 		z-index: 2
 		box-sizing: border-box
 		height: 100%
@@ -118,6 +122,14 @@ button
 	box-shadow: 1px 1px 2px 1px #888 
 	border: none
 
+.method-title
+	@extend .input
+	font-size: 20px
+	margin-left: 20%
+	border-bottom: 2px solid #888
+	box-sizing: border-box
+	width: 160px
+
 // input radio button styling
 .radio-input
 	@extend .input
@@ -141,10 +153,10 @@ input[type=radio] + label > span
 	box-shadow: 1px 1px 2px 1px #888 
 
 input[type=radio]:checked + label > span > span
-	display: inline-block
+	display: block
 	width: 0.5em
 	height: 0.5em
-	margin: 0.15em
+	margin: 0.15em auto
 	border-radius: 0.15em
 	background-image: linear-gradient(rgb(230,120,100),rgb(230,50,50))
 

@@ -3,7 +3,7 @@ html, body {
   padding: 0; }
 
 body {
-  background-color: #999;
+  background-color: #ddd;
   font-family: 'Open Sans', sans-serif; }
 
 header {
@@ -19,22 +19,24 @@ header {
 .chart {
   background-color: #ddd;
   width: 600px;
-  height: 500px;
+  height: 450px;
   margin: 10px auto 0 auto;
+  position: relative;
   display: flex;
   justify-content: space-around;
   align-items: flex-end; }
 
 .chart-grid {
   position: absolute;
+  top: 0px;
   box-sizing: border-box;
   width: 600px;
-  height: 500px;
+  height: 450px;
   cursor: pointer;
   display: flex; }
   .chart-grid .col {
     box-sizing: border-box;
-    height: 500px;
+    height: 450px;
     width: 100%;
     display: flex;
     flex-direction: column-reverse; }
@@ -88,7 +90,7 @@ header {
     display: flex;
     flex-direction: column; }
 
-.input, button, .radio-input, .selector {
+.input, button, .method-title, .radio-input, .selector {
   height: 30px;
   font-size: 20px;
   font: 20px normal 'Open Sans';
@@ -103,6 +105,13 @@ button {
   background-image: linear-gradient(#f0f0f0, #e0e0e0);
   box-shadow: 1px 1px 2px 1px #888;
   border: none; }
+
+.method-title {
+  font-size: 20px;
+  margin-left: 20%;
+  border-bottom: 2px solid #888;
+  box-sizing: border-box;
+  width: 160px; }
 
 .radio-input {
   margin-left: 20%;
@@ -124,10 +133,10 @@ input[type=radio] + label > span {
   box-shadow: 1px 1px 2px 1px #888; }
 
 input[type=radio]:checked + label > span > span {
-  display: inline-block;
+  display: block;
   width: 0.5em;
   height: 0.5em;
-  margin: 0.15em;
+  margin: 0.15em auto;
   border-radius: 0.15em;
   background-image: linear-gradient(#e67864, #e63232); }
 
