@@ -166,3 +166,23 @@ input[type=radio]:checked + label > span > span {
     float: right;
     width: 50px;
     text-align: right; }
+
+@media (max-height: 760px) {
+  header {
+    height: 15px;
+    margin: 5px auto 0 auto;
+    line-height: 15px;
+    font-size: 15px; }
+  button {
+    font-size: 15px;
+    width: calc(100% / 3 - 7px);
+    margin-right: 10px;
+    margin-bottom: 10px; }
+    button:nth-child(3) {
+      margin-right: 0; }
+  .selector-title, .display-num {
+    font-size: 15px; }
+  .sort-method-options .method-title, .sort-method-options label {
+    font-size: 15px; }
+  .sort-method-options .radio-input {
+    height: 20px; } }

@@ -187,3 +187,28 @@ input[type=radio]:checked + label > span > span
 		float: right
 		width: 50px
 		text-align: right
+
+@media(max-height: 760px)
+	$small-font-size: 15px
+	header
+		height: $small-font-size
+		margin: 5px auto 0 auto
+		line-height: $small-font-size
+		font-size: $small-font-size
+
+	button
+		font-size: $small-font-size
+		width: calc(100% / 3 - 7px)	
+		margin-right: 10px
+		margin-bottom: 10px
+		&:nth-child(3)
+			margin-right: 0
+
+	.selector-title,  .display-num
+		font-size: $small-font-size
+			
+	.sort-method-options
+		.method-title, label
+			font-size: $small-font-size
+		.radio-input
+			height: 20px
