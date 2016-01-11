@@ -113,14 +113,21 @@ var chartGridView = {
 }
 
 var chartView = {
-	chartHeight : 450, //pixels - refactor this into somewhere more visible
 	chartEl : document.getElementsByClassName('chart')[0],
 	barStyleClass : 'thin-bar',
+	chartHeight : null,
+	readChartHeight: function() {
+		// Reads the current height of the chart from the page for the rendering of chart elements
+		if (!this.chartHeight) { 
+			this.chartHeight = parseInt(getComputedStyle(this.chartEl).height.slice(0,-2)) 
+		}
+	},
 	setBarHeight : function(el,val,maxVal) {
 		//take number or DOM element as input for 'el'
 		if (typeof el === 'number') { 
 			el = document.getElementById(el)
 		}
+		this.readChartHeight()
 		var elHeight = this.chartHeight * (val / maxVal)
 		elHeight = elHeight.toString()
 		el.style.height = elHeight+"px"
