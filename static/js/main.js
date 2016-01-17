@@ -1,16 +1,3 @@
-// documentation
-
-// features
-// 	add a speed toggle
-//  add info for each sort
-//  prompt user to adjust bars
-// 	add a number of bars toggle
-// 	add some archetypical sorts
-
-// bugs
-//	chart-grid doing weird shit in firefox
-
-
 // RUN THE APP
 Controller.init()
 
