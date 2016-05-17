@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Jaapokki';
+  src: url("../fonts/jaapokki-regular.eot");
+  src: url("../fonts/jaapokki-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/jaapokki-regular.svg#jaapokki") format("svg"), url("../fonts/jaapokki-regular.woff") format("woff"), url("../fonts/jaapokki-regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
 html, body {
   margin: 0;
   padding: 0; }
@@ -14,7 +21,16 @@ header {
   margin: 10px auto 0 auto;
   text-align: center;
   line-height: 50px;
-  font-size: 30px; }
+  font-family: "Jaapokki";
+  font-size: 30px;
+  color: #444; }
+
+@media (max-height: 760px) {
+  header {
+    height: 15px;
+    margin: 5px auto 0 auto;
+    line-height: 15px;
+    font-size: 15px; } }
 
 .chart {
   background-color: #ddd;
@@ -96,26 +112,37 @@ header {
   font: 20px normal 'Open Sans';
   margin-bottom: 5px; }
 
-button {
-  width: 100%;
-  border-radius: 5px;
-  margin: 0 10px 5px 0;
-  cursor: pointer;
+.button-color, button, .selector .incrementor {
   background: #e0e0e0;
-  background-image: linear-gradient(#f0f0f0, #e0e0e0);
+  background-image: linear-gradient(#f0f0f0, #e0e0e0); }
+  .button-color:hover, button:hover, .selector .incrementor:hover {
+    background: #c8c8c8;
+    background-image: linear-gradient(#f0f0f0, #c8c8c8); }
+
+button {
+  width: calc(100% / 3 - 7px);
+  border-radius: 5px;
+  margin: 0 10px 10px 0;
+  cursor: pointer;
   box-shadow: 1px 1px 2px 1px #888;
-  border: none; }
+  border: none;
+  font-size: 15px; }
+  button:nth-child(3) {
+    margin-right: 0; }
 
 .method-title {
-  font-size: 20px;
   margin-left: 20%;
   border-bottom: 2px solid #888;
   box-sizing: border-box;
   width: 160px; }
 
+.method-title, label {
+  font-size: 15px; }
+
 .radio-input {
   margin-left: 20%;
-  width: 150px; }
+  width: 150px;
+  height: 20px; }
 
 input[type=radio] {
   display: none; }
@@ -144,14 +171,13 @@ input[type=radio]:checked + label > span > span {
   display: flex;
   justify-content: space-between; }
   .selector .selector-title {
-    width: 200px; }
+    width: 200px;
+    font-size: 15px; }
   .selector .incrementor {
     margin-left: 0.5em;
     width: 1em;
     height: 1em;
     border-radius: 0.25em;
-    background: #e0e0e0;
-    background-image: linear-gradient(#f0f0f0, #e0e0e0);
     box-shadow: 1px 1px 2px 1px #888;
     cursor: pointer; }
   .selector .more:before, .selector .less:before {
@@ -165,24 +191,5 @@ input[type=radio]:checked + label > span > span {
   .selector .display-num {
     float: right;
     width: 50px;
-    text-align: right; }
-
-@media (max-height: 760px) {
-  header {
-    height: 15px;
-    margin: 5px auto 0 auto;
-    line-height: 15px;
+    text-align: right;
     font-size: 15px; }
-  button {
-    font-size: 15px;
-    width: calc(100% / 3 - 7px);
-    margin-right: 10px;
-    margin-bottom: 10px; }
-    button:nth-child(3) {
-      margin-right: 0; }
-  .selector-title, .display-num {
-    font-size: 15px; }
-  .sort-method-options .method-title, .sort-method-options label {
-    font-size: 15px; }
-  .sort-method-options .radio-input {
-    height: 20px; } }

@@ -1,3 +1,11 @@
+// Definitions and mixins
+@font-face
+	font-family: 'Jaapokki'
+	src: url('../fonts/jaapokki-regular.eot')
+	src: url('../fonts/jaapokki-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/jaapokki-regular.svg#jaapokki') format('svg'), url('../fonts/jaapokki-regular.woff') format('woff'), url('../fonts/jaapokki-regular.ttf') format('truetype')
+	font-weight: normal
+	font-style: normal
+
 =transition($args...)
     -webkit-transition:   $args
     -moz-transition:      $args
@@ -16,6 +24,7 @@ body
 $panel-bg-color:  #ddd
 $panel-width: 600px
 $chart-height: 450px
+$small-font-size: 15px
 
 header
 	background-color: $panel-bg-color
@@ -25,7 +34,16 @@ header
 	margin: 10px auto 0 auto
 	text-align: center
 	line-height: 50px
+	font-family: "Jaapokki"
 	font-size: 30px
+	color: #444
+
+@media(max-height: 760px)
+	header
+		height: $small-font-size
+		margin: 5px auto 0 auto
+		line-height: $small-font-size
+		font-size: $small-font-size
 
 .chart
 	background-color: $panel-bg-color 
@@ -111,30 +129,42 @@ header
 	font: 20px normal 'Open Sans'
 	margin-bottom: 5px
 
-button
-	@extend .input
-	width: 100%	
-	border-radius: 5px
-	margin: 0 10px 5px 0
-	cursor: pointer
+.button-color
 	background: rgb(224,224,224)
 	background-image: linear-gradient(rgb(240,240,240),rgb(224,224,224))
+	&:hover
+		background: rgb(200,200,200)
+		background-image: linear-gradient(rgb(240,240,240),rgb(200,200,200))
+
+button
+	@extend .input
+	@extend .button-color
+	width: calc(100% / 3 - 7px)	
+	border-radius: 5px
+	margin: 0 10px 10px 0
+	cursor: pointer
 	box-shadow: 1px 1px 2px 1px #888 
 	border: none
+	font-size: $small-font-size
+	&:nth-child(3)
+		margin-right: 0
 
 .method-title
 	@extend .input
-	font-size: 20px
 	margin-left: 20%
 	border-bottom: 2px solid #888
 	box-sizing: border-box
 	width: 160px
+
+.method-title, label
+	font-size: $small-font-size
 
 // input radio button styling
 .radio-input
 	@extend .input
 	margin-left: 20%
 	width: 150px
+	height: 20px
 
 input[type=radio]
 	display: none
@@ -166,13 +196,13 @@ input[type=radio]:checked + label > span > span
 	justify-content: space-between
 	.selector-title
 		width: 200px
+		font-size: $small-font-size
 	.incrementor
+		@extend .button-color
 		margin-left: 0.5em
 		width: 1em
 		height: 1em
 		border-radius: 0.25em
-		background: rgb(224,224,224)
-		background-image: linear-gradient(rgb(240,240,240),rgb(224,224,224))
 		box-shadow: 1px 1px 2px 1px #888
 		cursor: pointer
 	.more:before,.less:before
@@ -187,28 +217,9 @@ input[type=radio]:checked + label > span > span
 		float: right
 		width: 50px
 		text-align: right
-
-@media(max-height: 760px)
-	$small-font-size: 15px
-	header
-		height: $small-font-size
-		margin: 5px auto 0 auto
-		line-height: $small-font-size
 		font-size: $small-font-size
 
-	button
-		font-size: $small-font-size
-		width: calc(100% / 3 - 7px)	
-		margin-right: 10px
-		margin-bottom: 10px
-		&:nth-child(3)
-			margin-right: 0
 
-	.selector-title,  .display-num
-		font-size: $small-font-size
+
 			
-	.sort-method-options
-		.method-title, label
-			font-size: $small-font-size
-		.radio-input
-			height: 20px
+	
