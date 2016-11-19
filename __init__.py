@@ -2,7 +2,7 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/sort/')
+@app.route('/')
 def visual_sort():
     return render_template('visual_sort.html')
 
