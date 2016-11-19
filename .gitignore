@@ -1,9 +1,3 @@
-# tells git what files to ignore
-*~
-*.swp
-*.pyc
+# tells git which files to ignore
 venv
 node_modules
-gulpfile.js
-open_here.ps1
-

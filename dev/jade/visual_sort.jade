@@ -2,7 +2,7 @@ doctype html
 html
 	head
 		link(href='https://fonts.googleapis.com/css?family=Open+Sans',rel='stylesheet',type='text/css')
-		link(rel="stylesheet", href="{{ url_for('visual_algo.static',filename='./css/style.css') }}")
+		link(rel="stylesheet", href="{{ url_for('static',filename='./css/style.css') }}")
 		title Visual Sort
 	body
 		header Visual Sort
@@ -60,7 +60,7 @@ html
 						span 
 							span
 
-		script(src="{{ url_for('visual_algo.static',filename='./js/model.js') }}")
-		script(src="{{ url_for('visual_algo.static',filename='./js/controller.js') }}")
-		script(src="{{ url_for('visual_algo.static',filename='./js/view.js') }}")
-		script(src="{{ url_for('visual_algo.static',filename='./js/main.js') }}")
+		script(src="{{ url_for('static',filename='./js/model.js') }}")
+		script(src="{{ url_for('static',filename='./js/controller.js') }}")
+		script(src="{{ url_for('static',filename='./js/view.js') }}")
+		script(src="{{ url_for('static',filename='./js/main.js') }}")
