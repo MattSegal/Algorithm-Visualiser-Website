@@ -8,7 +8,7 @@
             "img",
             "fonts",
             "templates",
-            "layer"
+            "app"
         ],
         "non-deployable" : [
 
