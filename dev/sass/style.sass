@@ -1,0 +1,225 @@
+// Definitions and mixins
+@font-face
+	font-family: 'Jaapokki'
+	src: url('../fonts/jaapokki-regular.eot')
+	src: url('../fonts/jaapokki-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/jaapokki-regular.svg#jaapokki') format('svg'), url('../fonts/jaapokki-regular.woff') format('woff'), url('../fonts/jaapokki-regular.ttf') format('truetype')
+	font-weight: normal
+	font-style: normal
+
+=transition($args...)
+    -webkit-transition:   $args
+    -moz-transition:      $args
+    -ms-transition:       $args
+    -o-transition:        $args
+    transition:           $args
+
+html, body
+	margin: 0
+	padding: 0
+	
+body
+	background-color: #ddd
+	font-family: 'Open Sans', sans-serif
+
+$panel-bg-color:  #ddd
+$panel-width: 600px
+$chart-height: 450px
+$small-font-size: 15px
+
+header
+	background-color: $panel-bg-color
+	width: $panel-width
+	border-radius: 5px
+	height: 50px
+	margin: 10px auto 0 auto
+	text-align: center
+	line-height: 50px
+	font-family: "Jaapokki"
+	font-size: 30px
+	color: #444
+
+@media(max-height: 760px)
+	header
+		height: $small-font-size
+		margin: 5px auto 0 auto
+		line-height: $small-font-size
+		font-size: $small-font-size
+
+.chart
+	background-color: $panel-bg-color 
+	width: $panel-width
+	height: $chart-height
+	margin: 10px auto 0 auto 
+	position: relative
+	display: flex
+	justify-content: space-around
+	align-items: flex-end
+
+.chart-grid
+	// border: 2px solid red
+	position: absolute
+	top: 0px
+	box-sizing: border-box
+	width: $panel-width
+	height: $chart-height
+	cursor: pointer
+	display: flex
+	.col
+		// border: 1px solid red
+		box-sizing: border-box
+		height: $chart-height
+		width: 100%
+		display: flex
+		flex-direction: column-reverse
+	.row
+		// border: 1px solid red
+		z-index: 2
+		box-sizing: border-box
+		height: 100%
+		width: 100%
+		border-radius: 5px
+		&:hover,
+			border: 4px solid rgb(255,100,100)
+
+
+.bar 
+	width: 100%
+	height: 200px
+	box-sizing:  border-box	
+	background-color: #777
+	border-radius: 5px 5px 0 0
+	&.thin-bar
+		margin: 0 2px
+		border: 2px solid #fff
+	&.mid-bar
+		margin: 0 1px
+		border: 2px solid #fff
+	&.fat-bar
+		margin: 0 0px
+		border: 2px solid #fff
+	&.fatter-bar
+		margin: 0 0px
+		border: 1px solid #fff
+
+.control-panel
+	width: $panel-width
+	height: 235px
+	border-radius: 5px
+	background-color: $panel-bg-color 
+	box-sizing: border-box
+	display: flex
+	margin: 10px auto 0 auto
+	padding: 10px
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+	.controls
+		width: 100%
+		// border: 1px dotted red
+	.sort-method-options
+		width: 100%
+		// border: 1px dotted blue
+		display: flex
+		flex-direction: column
+
+
+.input
+	height: 30px
+	font-size: 20px
+	font: 20px normal 'Open Sans'
+	margin-bottom: 5px
+
+.button-color
+	background: rgb(224,224,224)
+	background-image: linear-gradient(rgb(240,240,240),rgb(224,224,224))
+	&:hover
+		background: rgb(200,200,200)
+		background-image: linear-gradient(rgb(240,240,240),rgb(200,200,200))
+
+button
+	@extend .input
+	@extend .button-color
+	width: calc(100% / 3 - 7px)	
+	border-radius: 5px
+	margin: 0 10px 10px 0
+	cursor: pointer
+	box-shadow: 1px 1px 2px 1px #888 
+	border: none
+	font-size: $small-font-size
+	&:nth-child(3)
+		margin-right: 0
+
+.method-title
+	@extend .input
+	margin-left: 20%
+	border-bottom: 2px solid #888
+	box-sizing: border-box
+	width: 160px
+
+.method-title, label
+	font-size: $small-font-size
+
+// input radio button styling
+.radio-input
+	@extend .input
+	margin-left: 20%
+	width: 150px
+	height: 20px
+
+input[type=radio]
+	display: none
+
+input[type=radio] + label > span
+	display: inline-block
+	width: 0.8em
+	height: 0.8em
+	float: right
+	// styling for box
+	margin: 0.25em 0 0.25em 0
+	vertical-align: bottom
+	border-radius: 0.25em
+	background: rgb(224,224,224)
+	background-image: linear-gradient(rgb(240,240,240),rgb(224,224,224))
+	box-shadow: 1px 1px 2px 1px #888 
+
+input[type=radio]:checked + label > span > span
+	display: block
+	width: 0.5em
+	height: 0.5em
+	margin: 0.15em auto
+	border-radius: 0.15em
+	background-image: linear-gradient(rgb(230,120,100),rgb(230,50,50))
+
+.selector
+	@extend .input
+	display: flex
+	justify-content: space-between
+	.selector-title
+		width: 200px
+		font-size: $small-font-size
+	.incrementor
+		@extend .button-color
+		margin-left: 0.5em
+		width: 1em
+		height: 1em
+		border-radius: 0.25em
+		box-shadow: 1px 1px 2px 1px #888
+		cursor: pointer
+	.more:before,.less:before
+		display: block
+		line-height: 1em
+		text-align: center
+	.more:before
+		content: '+' 
+	.less:before
+		content: '-' 
+	.display-num
+		float: right
+		width: 50px
+		text-align: right
+		font-size: $small-font-size
+
+
+
+			
+	
