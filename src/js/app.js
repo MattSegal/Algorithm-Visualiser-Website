@@ -1,6 +1,5 @@
 import styles from '../sass/style.sass'
 import CONST from './constants'
-import Utils from './utils'
 import Model from './model'
 import Observer from './observer.js'
 import Actions from './actions.js'
@@ -9,7 +8,7 @@ import selectionGridView from './views/selectionGridView'
 import controlPanelView from './views/controlPanelView'
 import chartView from './views/chartView'
 
-// When in doubt, redraw everything
+// When in doubt, redraw *everything*
 const refreshScreen = () => {
   Model.randomArray()
   Observer.emitEvent(Actions.DRAW_SELECTION_GRID)
@@ -17,35 +16,50 @@ const refreshScreen = () => {
   Observer.emitEvent(Actions.DRAW_BAR_CHART)
 }
 
-// Recursive sorting event loop
-const sortLoop = (sortMove) => {
-  var move = sortMove.next()
-  if (move.done) {
-    console.log('exit sort mode')
-    Model.isSorting = false
-    Observer.emitEvent(Actions.SHOW_CONTROL_PANEL)
-    Observer.emitEvent(Actions.SHOW_SELECTION_GRID)
-    return
-  }
-  chartView.toggleBarActive(move.value.idx)
-  Utils.timer(Model.sortDelay,() => {
-    Observer.emitEvent(Actions.DRAW_BAR_CHART)
-    Observer.emitEvent(Actions.DRAW_BAR_ACTIVE, move.value.targetIdx)
-  }).then(() => Utils.timer(Model.sortDelay, () => {
-    Observer.emitEvent(Actions.DRAW_BAR_ACTIVE, move.value.targetIdx)
-    this.sortLoop(sortMove)
-  }))
-}
-
 // Kick off array sorting event loop on user click
 Observer.addEvent(Actions.SORT_ARRAY, () => {
-  if (Model.isSorting || Model.isSorted()) return
-  console.log('enter sort mode')
+  if (Model.isSorted()) return
   Model.isSorting = true
   Observer.emitEvent(Actions.HIDE_CONTROL_PANEL)
   Observer.emitEvent(Actions.HIDE_SELECTION_GRID)
-  var sortMove = Model.getSortMethod()
-  sortLoop(sortMove)
+  
+  // Build up and in-memory list of actions to replay for the user
+  let actions = []
+  const compare = (i, j) => actions.push({type: 'COMPARE', i: i, j: j})
+  const swap = (i, j) => actions.push({type: 'SWAP', i: i, j: j})
+  const sort = Model.getSorter()
+  sort(compare, swap)
+
+  // TODO: Count comparisons, swaps, total operations
+
+  // Loop over sort actions and render for user
+  let idx = 0
+  const id = setInterval(() => {
+    const action = actions[idx]
+
+    // Replay action
+    if (action.type === 'COMPARE') {
+      console.log(`COMPARE ${Model.array[action.i]} to ${Model.array[action.j]}`)
+      // Render comparison - don't redraw whole chart
+      // use colors to show whats happening
+      Observer.emitEvent(Actions.DRAW_BAR_CHART)
+    } else {
+      console.log(`SWAP ${Model.array[action.i]} to ${Model.array[action.j]}`)
+      Model.swap(action.i, action.j)
+      // Render swap - don't redraw whole chart
+      // use colors to show whats happening
+      Observer.emitEvent(Actions.DRAW_BAR_CHART)
+    }
+
+    // Iterate
+    idx += 1
+    if (idx === actions.length) {
+      clearInterval(id)
+      Model.isSorting = false
+      Observer.emitEvent(Actions.SHOW_CONTROL_PANEL)
+      Observer.emitEvent(Actions.SHOW_SELECTION_GRID)
+    }
+  }, Model.sortDelay) 
 })
 
 // Update bar height when user clicks the grid

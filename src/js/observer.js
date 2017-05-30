@@ -16,7 +16,9 @@ module.exports = {
   },
 
   emitEvent: function(eventName, data) {
-    console.info('Observing ', eventName, 'with ',data)
+    console.info(`Observing ${eventName}${
+      typeof(data) !== "undefined" ? ' with parameters ' + data : ''
+    }`)
     if (!this.events[eventName])
       return
     for (let func of this.events[eventName]) {

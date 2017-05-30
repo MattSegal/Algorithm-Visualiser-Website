@@ -1,5 +1,4 @@
 import CONST from '../constants'
-import Utils from '../utils'
 import Observer from '../observer.js'
 import Actions from '../actions.js'
 import Model from '../model'
@@ -35,8 +34,12 @@ module.exports = {
   },
 
   renderArray : function() {
-    // Clear existing bars
-    Utils.removeElementsByClass('bar')
+    // Clear existing bars by class name
+    var elements = document.getElementsByClassName('bar')
+    var len = elements.length
+    for (var idx = 0;idx<len;idx++) {
+      elements[0].parentNode.removeChild(elements[0])
+    }
 
     // Set bar style
     if (Model.array.length < 30) {

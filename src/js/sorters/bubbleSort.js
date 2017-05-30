@@ -1,19 +1,13 @@
-import 'babel-polyfill'
-
-const bubbleSort = (updateModel) => function*(array) {
-  var len = array.length
-  var temp
-  for (var end = len-1; end>0; end--) {
-    for (var idx = 0; idx < end; idx++) {
+const bubbleSort = (array) => (compare, swap) => {
+  let temp
+  for (let end = array.length - 1; end > 0; end--) {
+    for (let idx = 0; idx < end; idx++) {
+      compare(idx, idx + 1)
       if (array[idx] > array[idx + 1]) {
-        // Swap
+        swap(idx, idx + 1)
         temp = array[idx]
         array[idx] = array[idx+1]
         array[idx+1] = temp
-        // update array
-        updateModel(array)
-        // yield swap
-        yield {idx : idx ,targetIdx : idx+1}
       }
     }
   }
