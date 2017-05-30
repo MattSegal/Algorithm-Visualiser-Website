@@ -35,7 +35,6 @@ module.exports = {
   },
 
   renderArray : function() {
-    console.log(Model.array)
     // Clear existing bars
     Utils.removeElementsByClass('bar')
 

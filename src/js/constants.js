@@ -2,10 +2,10 @@ module.exports = {
   MAX_BARS: 100,
   MIN_BARS: 10,
   BARS_INCREMENT: 5,
-  MAX_VAL: 60,
+  MAX_VAL: 100,
   MIN_VAL: 5,
   VAL_INCREMENT: 5,
-  MAX_DELAY: 120,
+  MAX_DELAY: 100,
   MIN_DELAY: 0,
   DELAY_INCREMENT: 10,
   CHART_HEIGHT: 450, // pixels

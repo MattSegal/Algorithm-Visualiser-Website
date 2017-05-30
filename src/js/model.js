@@ -5,27 +5,29 @@ import mergeSort from './sorters/mergeSort'
 import selectionSort from './sorters/selectionSort'
 
 let Model = {
-    // array data
     array : [],
-    // array meta info
-    arrayLength : 30, // set bar margin to less if you do more than 30 or so
-    maxValue : 30,
-    // sort data
-    sortMethod : '',
+    arrayLength : 30,
+    maxValue : 60,
+    sortMethod : 'bubbleSort',
     sortDelay : 20, // ms
-    // app state 
     isSorting : false,
+
     randomArray : function() {
       this.array = Array(this.arrayLength).fill(0)
         .map(() => Math.ceil(this.maxValue * Math.random()))
+      console.log(this.array)
     },
+
     updateArray: function(array) {
       this.array = array
     },
+
     reverseArray: function() {
-      this.randomArray
-      this.array = this.array.sort().reverse()
+      this.array = this.array
+        .sort((a,b) => a - b)
+        .reverse()
     },
+
     getSortMethod : function() {
       switch (this.sortMethod) {
         case 'bubbleSort':
@@ -45,15 +47,16 @@ let Model = {
           break
       }
     },
+
     isSorted : function() {
-      const len = this.array.length
-      for (var idx = 0; idx < len; idx++) {
+      for (var idx = 0; idx < this.array.length; idx++) {
         if (this.array[idx] > this.array[idx+1]) {
           return false
         }
       }
       return true
     }
+
 }
 
 module.exports = Model
