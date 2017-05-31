@@ -2,8 +2,9 @@ import bubbleSort from './sorters/bubbleSort'
 import cocktailSort from './sorters/cocktailSort'
 import insertionSort from './sorters/insertionSort'
 import mergeSort from './sorters/mergeSort'
-import selectionSort from './sorters/selectionSort'
+import CONST from './constants'
 // other sort possibilities
+// selection sort
 // quicksort!
 // shell sort
 // stooge sort
@@ -11,10 +12,10 @@ import selectionSort from './sorters/selectionSort'
 // This is weird
 let Model = {
     array : [],
-    arrayLength : 30,
-    maxValue : 60,
+    arrayLength : CONST.INITIAL_BARS,
+    maxValue : CONST.INITIAL_VAL,
+    sortDelay : CONST.INITIAL_DELAY,
     sortMethod : 'bubbleSort',
-    sortDelay : 20, // ms
     isSorting : false,
 
     swap: function(i, j) {
@@ -40,21 +41,22 @@ let Model = {
 
     getSorter : function() {
       // pass in array by value
+      const arrayCopy = this.array.slice()
       switch (this.sortMethod) {
         case 'bubbleSort':
-          return bubbleSort(this.array.slice())
+          return bubbleSort(arrayCopy)
           break
         case 'insertionSort':
-          return insertionSort(this.array.slice())
+          return insertionSort(arrayCopy)
           break
         case 'selectionSort':
-          return selectionSort(this.array.slice())
+          return selectionSort(arrayCopy)
           break
         case 'cocktailSort':
-          return cocktailSort(this.array.slice())
+          return cocktailSort(arrayCopy)
           break
         case 'mergeSort':
-          return mergeSort(this.array.slice())
+          return mergeSort(arrayCopy)
           break
       }
     },

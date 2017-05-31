@@ -50,7 +50,7 @@ module.exports = {
     document
       .getElementById(`${row}-${col}`)
       .addEventListener('click', () => 
-        Observer.emitEvent(Actions.UPDATE_COLUMN, [row,col])
+        Observer.emitEvent(Actions.UPDATE_BAR_HEIGHT, [row,col])
       )
   },
 

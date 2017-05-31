@@ -16,6 +16,10 @@ const refreshScreen = () => {
   Observer.emitEvent(Actions.DRAW_BAR_CHART)
 }
 
+Observer.addEvent(Actions.LOG, (i, j) => {
+  console.log(i, j)
+})
+
 // Kick off array sorting event loop on user click
 Observer.addEvent(Actions.SORT_ARRAY, () => {
   if (Model.isSorted()) return
@@ -39,16 +43,15 @@ Observer.addEvent(Actions.SORT_ARRAY, () => {
 
     // Replay action
     if (action.type === 'COMPARE') {
-      console.log(`COMPARE ${Model.array[action.i]} to ${Model.array[action.j]}`)
+      // console.log(`COMPARE ${Model.array[action.i]} to ${Model.array[action.j]}`)
       // Render comparison - don't redraw whole chart
       // use colors to show whats happening
-      Observer.emitEvent(Actions.DRAW_BAR_CHART)
+      Observer.emitEvent(Actions.DRAW_COMPARE, [action.i, action.j])
     } else {
-      console.log(`SWAP ${Model.array[action.i]} to ${Model.array[action.j]}`)
       Model.swap(action.i, action.j)
       // Render swap - don't redraw whole chart
-      // use colors to show whats happening
-      Observer.emitEvent(Actions.DRAW_BAR_CHART)
+      Observer.emitEvent(Actions.DRAW_BAR_SWAP, [action.i, action.j])
+      // TODO: use colors to show whats happening
     }
 
     // Iterate
@@ -63,10 +66,10 @@ Observer.addEvent(Actions.SORT_ARRAY, () => {
 })
 
 // Update bar height when user clicks the grid
-Observer.addEvent(Actions.UPDATE_COLUMN, (rowIdx, colIdx) => {
+Observer.addEvent(Actions.UPDATE_BAR_HEIGHT, (rowIdx, colIdx) => {
   const newValue = rowIdx + 1
   Model.array[colIdx] = newValue
-  Observer.emitEvent(Actions.DRAW_BAR_CHART)
+  Observer.emitEvent(Actions.DRAW_BAR_HEIGHT, [colIdx])
 })
 
 // Update sort method on user radio-button click

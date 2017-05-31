@@ -16,13 +16,14 @@ module.exports = {
   },
 
   emitEvent: function(eventName, data) {
-    console.info(`Observing ${eventName}${
-      typeof(data) !== "undefined" ? ' with parameters ' + data : ''
-    }`)
+    const isData = typeof(data) !== "undefined"
+    console.info(`Observing ${eventName}${isData ? ' ('+data+')' : ''}`)
     if (!this.events[eventName])
       return
     for (let func of this.events[eventName]) {
-      func(data)
+      isData 
+        ? func(...data)
+        : func()
     }
   },
 

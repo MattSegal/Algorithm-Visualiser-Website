@@ -21,7 +21,7 @@ module.exports = {
     getEl('reverseBtn').addEventListener('click', () => Observer.emitEvent(Actions.REVERSE_ARRAY))
     var sortRadioDiv = document.getElementsByClassName('sort-method-options')[0]
     sortRadioDiv.addEventListener('click', () => 
-      Observer.emitEvent(Actions.UPDATE_SORT_METHOD, this.getSortMethod())
+      Observer.emitEvent(Actions.UPDATE_SORT_METHOD, [this.getSortMethod()])
     )
     getEl('more-bars').addEventListener('click', () => Observer.emitEvent(Actions.INCREMENT_BARS))
     getEl('less-bars').addEventListener('click', () => Observer.emitEvent(Actions.DECREMENT_BARS))

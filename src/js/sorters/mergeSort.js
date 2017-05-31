@@ -1,116 +1,52 @@
-import 'babel-polyfill'
-
-function* mergeSortGen(array) {
-    var split, firstArr, secondArr, 
-        firstSorted, secondSorted, mergedArr
-    var len = array.length
+// TODO - keep track on indexes so we can call
+// compare and swap using absolute values
+const mergeSort = (array, start, end) => (compare, swap) => {
+    const len = array.length
     if (len <= 1) return array
-    // set range
-    array.start = array.start || 0
-    array.end = array.end || len
-    // split arrays
-    split = (len%2 === 0) ? len/2 : (len+1)/2
+    start = typeof(start) === 'undefined' ? 0 : start
+    end = typeof(end) === 'undefined' ? len : end
 
-    firstArr        = array.slice(0,split)
-    firstArr.start  = array.start
-    firstArr.end    = array.start + split
-
-    secondArr       = array.slice(split)
-    secondArr.start = array.start + split
-    secondArr.end   = array.end
+    let split = (len % 2 === 0) ? len/2 : (len + 1) / 2
+    let sortedStart = mergeSort(
+        array.slice(0, split),
+        start,
+        split - 1,
+    )(compare, swap)
     
-    // divide
-    firstSorted = yield* mergeSortGen(firstArr)
-    secondSorted = yield* mergeSortGen(secondArr)
-    // merge
-    mergedArr = yield* mergeGen(firstSorted,secondSorted)
-    return mergedArr
+    let sortedEnd = mergeSort(
+        array.slice(split),
+        split,
+        end,
+    )(compare, swap)
+    
+    return merge(sortedStart, sortedEnd, start)(compare, swap)
 }
 
-function* mergeGen(A,B) {
-    // swap so A comes before B
-    if (A.start > B.start) { var swap=B; B=A; A=swap } 
-    var lenA = A.length
-    var lenB = B.length
-    var lenC = lenA + lenB
-    var idxA = 0
-    var idxB = 0
-    var C = []
-    C.start = A.start
-    C.end = B.end
-    for (var idxC=0;idxC<lenC;idxC++) {
-        if (idxA === lenA) {
+const merge = (A,B, start) => (compare, swap) =>  {
+    let lenC = A.length + B.length
+    let C = []
+    let idxA = 0
+    let idxB = 0
+    for (let idxC = 0; idxC < lenC; idxC++) {
+        if (idxA === A.length) {
             C[idxC] = B[idxB]
+            swap(start + idxC, start + A.length + idxB)
             idxB++
-            mergeGenModelUpdate(A,B,C,idxA,idxB)
-            yield {idx : B.start,targetIdx : C.start+idxC}
-            B.start++
-            A.start++
-        } else if (idxB === lenB) {
+        } else if (idxB === B.length) {
             C[idxC] = A[idxA]
-            idxA++
-            mergeGenModelUpdate(A,B,C,idxA,idxB)
-            yield {idx : A.start,targetIdx : C.start+idxC}
-            A.start++
-        } else if (A[idxA] < B[idxB]) {
-            C[idxC] = A[idxA]
-            idxA++
-            mergeGenModelUpdate(A,B,C,idxA,idxB)
-            yield {idx : A.start,targetIdx : C.start+idxC}
-            A.start++
-        } else {
-            C[idxC] = B[idxB]
-            idxB++
-            mergeGenModelUpdate(A,B,C,idxA,idxB)
-            yield {idx : B.start,targetIdx : C.start+idxC}
-            B.start++
-            A.start++
-        }
-    }
-    return C
-}
-
-function mergeGenModelUpdate(A,B,C,idxA,idxB) {
-    Model.array = Model.array.slice(0,C.start)
-        .concat(C)
-        .concat(A.slice(idxA))
-        .concat(B.slice(idxB))
-        .concat(Model.array.slice(C.end))
-}
-
-
-function mergeSort(array) { // this gets used don't delete
-    var len = array.length
-    if (len <= 1) return array
-    var split = (len%2 === 0) ? len/2 : (len+1)/2
-    var sortedStart = mergeSort(array.slice(0,split)) 
-    var sortedEnd = mergeSort(array.slice(split))
-    return merge(sortedStart,sortedEnd)
-}
-
-function merge(A,B) {
-    var lenA = A.length
-    var lenB = B.length
-    var lenC = lenA + lenB
-    var C = []
-    var idxA = 0
-    var idxB = 0
-    for (var idxC=0;idxC<lenC;idxC++) {
-        if (idxA === lenA) {
-            C[idxC] = B[idxB]
-            idxB++
-        } else if (idxB === lenB) {
-            C[idxC] = A[idxA]
+            swap(start + idxC, start + idxA)
             idxA++
         } else if (A[idxA] < B[idxB]) {
             C[idxC] = A[idxA]
+            swap(start + idxC, start + idxA)
             idxA++
         } else {
             C[idxC] = B[idxB]
+            swap(start + idxC, start + A.length + idxB)
             idxB++
         }
     }
     return C
 }
 
-module.exports = mergeSortGen
+module.exports = mergeSort

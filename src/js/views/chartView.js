@@ -6,11 +6,99 @@ import Model from '../model'
 // chartView
 module.exports = {
   init: function () {
-    this.chartEl =  document.getElementsByClassName('chart')[0]
-    this.barStyleClass = 'thin-bar'
+    this.chartEl =  document.getElementById('chart')
+    this.prevI = null
+    this.prevJ = null
     Observer.addEvent(Actions.DRAW_BAR_CHART, this.renderArray.bind(this))
+    Observer.addEvent(Actions.DRAW_BAR_SWAP, this.renderSwap.bind(this))
+    Observer.addEvent(Actions.DRAW_BAR_HEIGHT, this.renderHeight.bind(this))
+    Observer.addEvent(Actions.DRAW_COMPARE, this.renderCompare.bind(this))
   },
 
+  renderArray : function() {
+    // Clear existing bars
+    var elements = document.getElementsByClassName('bar')
+    const numElements = elements.length
+    for (let idx = 0; idx < numElements; idx++) {
+      // elements shrinks as children are deleted
+      this.chartEl.removeChild(elements[0])
+    }
+
+    // Render all bars
+    const barStyleClass = this._getBarStyle(Model.array.length)
+    for (let idx = 0; idx < Model.array.length; idx++) {
+      var barHTML = `<div id="${idx}" class="bar ${barStyleClass}"></div>`
+      this.chartEl.insertAdjacentHTML('beforeend', barHTML)
+      const barEl = document.getElementById(idx)
+      barEl.style.height = `${this._getBarHeight(idx)}px`
+    }
+  },
+
+  renderHeight: function(idx) {
+    const bar = document.getElementById(idx)
+    bar.style.height = `${this._getBarHeight(idx)}px`
+  },
+
+  renderSwap: function(i, j) {
+    const barI = document.getElementById(i)
+    const barJ = document.getElementById(j)
+    const heightI = barI.style.height
+    barI.style.height = barJ.style.height
+    barJ.style.height = heightI
+    this._removeCompare(j, i)
+  },
+
+  renderCompare: function(i, j) {
+    this._removeCompare(i, j)
+  },
+
+  _removeCompare: function(i, j) {
+    const barI = document.getElementById(i)
+    const barJ = document.getElementById(j)
+
+    // Update bar 'i'
+    if (i !== this.prevI) {
+      barI.classList.add('i')
+      if (i === this.prevJ) {
+        barI.classList.remove('j')
+      } 
+      if (this.prevI !== null) {
+        document.getElementById(this.prevI).classList.remove('i')
+      }
+    }
+
+    // Update bar 'j'
+    if (j !== this.prevJ) {
+      barJ.classList.add('j')
+      if (j === this.prevI) {
+        barJ.classList.remove('i')
+      } 
+      if (this.prevJ !== null) {
+        document.getElementById(this.prevJ).classList.remove('j')
+      }
+    }
+
+    this.prevI = i
+    this.prevJ = j
+  },
+
+  _getBarHeight: function(idx) {
+    return CONST.CHART_HEIGHT * (Model.array[idx] / Model.maxValue)
+  },
+
+  _getBarStyle: function(length) {
+    if (length < 30) {
+      return 'thin-bar'
+    } else if (length >= 60) {
+      return 'fatter-bar'
+    } else if (length >= 40) {
+      return 'fat-bar'
+    } else { // 40 > length >= 30
+      return 'mid-bar'
+    } 
+  },
+
+  // unused
   toggleBarActive : function(idx) {
     var activeColor = "rgb(255, 102, 102)"
     var defaultColor = "rgb(119, 119, 119)"
@@ -22,6 +110,7 @@ module.exports = {
     } 
   },
 
+  // unused
   toggleBarMoved : function(idx) {
     var activeColor = "rgb(73, 238, 127)"
     var defaultColor = "rgb(119, 119, 119)"
@@ -32,32 +121,4 @@ module.exports = {
       el.style.backgroundColor = activeColor
     } 
   },
-
-  renderArray : function() {
-    // Clear existing bars by class name
-    var elements = document.getElementsByClassName('bar')
-    var len = elements.length
-    for (var idx = 0;idx<len;idx++) {
-      elements[0].parentNode.removeChild(elements[0])
-    }
-
-    // Set bar style
-    if (Model.array.length < 30) {
-      this.barStyleClass = 'thin-bar'
-    } else if (Model.array.length >= 60) {
-      this.barStyleClass = 'fatter-bar'
-    } else if (Model.array.length >= 40) {
-      this.barStyleClass = 'fat-bar'
-    } else if (Model.array.length >= 30) {
-      this.barStyleClass = 'mid-bar'
-    } 
-    // Render bars
-    Model.array.forEach((val,idx)=> {
-      var barHTML = `<div id="${idx}" class="bar ${this.barStyleClass}"></div>`
-      this.chartEl.insertAdjacentHTML('beforeend', barHTML)
-      var barEl = document.getElementById(idx)
-      barEl.style.height = `${CONST.CHART_HEIGHT * (val / Model.maxValue)}px`
-      barEl.style.order = idx
-    })
-  }
 }
