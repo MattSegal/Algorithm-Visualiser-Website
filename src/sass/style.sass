@@ -1,11 +1,4 @@
 // Definitions and mixins
-@font-face
-	font-family: 'Jaapokki'
-	src: url('../fonts/jaapokki-regular.eot')
-	src: url('../fonts/jaapokki-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/jaapokki-regular.svg#jaapokki') format('svg'), url('../fonts/jaapokki-regular.woff') format('woff'), url('../fonts/jaapokki-regular.ttf') format('truetype')
-	font-weight: normal
-	font-style: normal
-
 =transition($args...)
     -webkit-transition:   $args
     -moz-transition:      $args
@@ -34,7 +27,7 @@ header
 	margin: 10px auto 0 auto
 	text-align: center
 	line-height: 50px
-	font-family: "Jaapokki"
+	font-family: "Signika"
 	font-size: 30px
 	color: #444
 
@@ -45,7 +38,7 @@ header
 		line-height: $small-font-size
 		font-size: $small-font-size
 
-.chart
+#chart
 	background-color: $panel-bg-color 
 	width: $panel-width
 	height: $chart-height
@@ -88,6 +81,10 @@ header
 	box-sizing:  border-box	
 	background-color: #777
 	border-radius: 5px 5px 0 0
+	&.i
+		background-color: #e77
+	&.j
+		background-color: #7e7
 	&.thin-bar
 		margin: 0 2px
 		border: 2px solid #fff
@@ -141,7 +138,7 @@ button
 	@extend .button-color
 	width: calc(100% / 3 - 7px)	
 	border-radius: 5px
-	margin: 0 10px 10px 0
+	margin: 0 5px 10px 0
 	cursor: pointer
 	box-shadow: 1px 1px 2px 1px #888 
 	border: none
