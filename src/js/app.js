@@ -16,10 +16,6 @@ const refreshScreen = () => {
   Observer.emitEvent(Actions.DRAW_BAR_CHART)
 }
 
-Observer.addEvent(Actions.LOG, (i, j) => {
-  console.log(i, j)
-})
-
 // Kick off array sorting event loop on user click
 Observer.addEvent(Actions.SORT_ARRAY, () => {
   if (Model.isSorted()) return
@@ -31,10 +27,9 @@ Observer.addEvent(Actions.SORT_ARRAY, () => {
   let actions = []
   const compare = (i, j) => actions.push({type: 'COMPARE', i: i, j: j})
   const swap = (i, j) => actions.push({type: 'SWAP', i: i, j: j})
-  const sort = Model.getSorter()
-  sort(compare, swap)
+  const update = (arr, start) => actions.push({type: 'UPDATE', arr: arr, start: start})
 
-  // TODO: Count comparisons, swaps, total operations
+  Model.runSort(swap, compare, update)
 
   // Loop over sort actions and render for user
   let idx = 0
@@ -43,18 +38,17 @@ Observer.addEvent(Actions.SORT_ARRAY, () => {
 
     // Replay action
     if (action.type === 'COMPARE') {
-      // console.log(`COMPARE ${Model.array[action.i]} to ${Model.array[action.j]}`)
-      // Render comparison - don't redraw whole chart
-      // use colors to show whats happening
       Observer.emitEvent(Actions.DRAW_COMPARE, [action.i, action.j])
-    } else {
+    } else if (action.type === 'SWAP') {
       Model.swap(action.i, action.j)
-      // Render swap - don't redraw whole chart
       Observer.emitEvent(Actions.DRAW_BAR_SWAP, [action.i, action.j])
-      // TODO: use colors to show whats happening
+    } else if (action.type === 'UPDATE') {
+      for (let i = 0; i < action.arr.length; i++) {
+        Model.array[action.start + i] = action.arr[i]
+      }
+      Observer.emitEvent(Actions.DRAW_BAR_SECTION, [action.start, action.arr.length])
     }
 
-    // Iterate
     idx += 1
     if (idx === actions.length) {
       clearInterval(id)

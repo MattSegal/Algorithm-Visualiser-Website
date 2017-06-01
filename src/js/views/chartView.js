@@ -7,12 +7,14 @@ import Model from '../model'
 module.exports = {
   init: function () {
     this.chartEl =  document.getElementById('chart')
-    this.prevI = null
-    this.prevJ = null
+    this.prevI = null // For rendering comparisons
+    this.prevJ = null // "   "          "
+    this.prev = null // For rendering swaps only
     Observer.addEvent(Actions.DRAW_BAR_CHART, this.renderArray.bind(this))
     Observer.addEvent(Actions.DRAW_BAR_SWAP, this.renderSwap.bind(this))
     Observer.addEvent(Actions.DRAW_BAR_HEIGHT, this.renderHeight.bind(this))
     Observer.addEvent(Actions.DRAW_COMPARE, this.renderCompare.bind(this))
+    Observer.addEvent(Actions.DRAW_BAR_SECTION, this.renderSection.bind(this))
   },
 
   renderArray : function() {
@@ -34,6 +36,12 @@ module.exports = {
     }
   },
 
+  renderSection : function(start, length) {
+    for (let i = start; i < start + length; i++) {
+      this.renderHeight(i)
+    }
+  },
+
   renderHeight: function(idx) {
     const bar = document.getElementById(idx)
     bar.style.height = `${this._getBarHeight(idx)}px`
@@ -45,14 +53,21 @@ module.exports = {
     const heightI = barI.style.height
     barI.style.height = barJ.style.height
     barJ.style.height = heightI
-    this._removeCompare(j, i)
+
+    // If we are rendering comparisons,
+    // then we want to show swap
+    if (this.prevI || this.prevJ)
+      this.renderCompare(j, i)
+    // Otherwise we should just highlight element j 
+    else {
+      document.getElementById(i).classList.add('i')
+      if (this.prev !== null && this.prev !== i)
+        document.getElementById(this.prev).classList.remove('i')
+      this.prev = i
+    }
   },
 
   renderCompare: function(i, j) {
-    this._removeCompare(i, j)
-  },
-
-  _removeCompare: function(i, j) {
     const barI = document.getElementById(i)
     const barJ = document.getElementById(j)
 

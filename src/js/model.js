@@ -9,13 +9,12 @@ import CONST from './constants'
 // shell sort
 // stooge sort
 
-// This is weird
-let Model = {
+module.exports = {
     array : [],
     arrayLength : CONST.INITIAL_BARS,
     maxValue : CONST.INITIAL_VAL,
     sortDelay : CONST.INITIAL_DELAY,
-    sortMethod : 'bubbleSort',
+    sortMethod : 'mergeSort',
     isSorting : false,
 
     swap: function(i, j) {
@@ -39,24 +38,21 @@ let Model = {
         .reverse()
     },
 
-    getSorter : function() {
+    runSort : function(swap, compare, update) {
       // pass in array by value
       const arrayCopy = this.array.slice()
       switch (this.sortMethod) {
         case 'bubbleSort':
-          return bubbleSort(arrayCopy)
+          bubbleSort(arrayCopy)(swap, compare)
           break
         case 'insertionSort':
-          return insertionSort(arrayCopy)
-          break
-        case 'selectionSort':
-          return selectionSort(arrayCopy)
+          insertionSort(arrayCopy)(swap, compare)
           break
         case 'cocktailSort':
-          return cocktailSort(arrayCopy)
+          cocktailSort(arrayCopy)(swap, compare)
           break
         case 'mergeSort':
-          return mergeSort(arrayCopy)
+          mergeSort(arrayCopy)(update, compare)
           break
       }
     },
@@ -69,7 +65,4 @@ let Model = {
       }
       return true
     }
-
 }
-
-module.exports = Model
