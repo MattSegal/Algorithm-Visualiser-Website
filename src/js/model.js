@@ -38,21 +38,21 @@ module.exports = {
         .reverse()
     },
 
-    runSort : function(swap, compare, update) {
+    runSort : function(compare, swap, update) {
       // pass in array by value
       const arrayCopy = this.array.slice()
       switch (this.sortMethod) {
         case 'bubbleSort':
-          bubbleSort(arrayCopy)(swap, compare)
+          bubbleSort(arrayCopy)(compare, swap)
           break
         case 'insertionSort':
-          insertionSort(arrayCopy)(swap, compare)
+          insertionSort(arrayCopy)(compare, swap)
           break
         case 'cocktailSort':
-          cocktailSort(arrayCopy)(swap, compare)
+          cocktailSort(arrayCopy)(compare, swap)
           break
         case 'mergeSort':
-          mergeSort(arrayCopy)(update, compare)
+          mergeSort(arrayCopy)(compare, update)
           break
       }
     },

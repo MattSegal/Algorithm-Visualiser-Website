@@ -29,7 +29,7 @@ Observer.addEvent(Actions.SORT_ARRAY, () => {
   const swap = (i, j) => actions.push({type: 'SWAP', i: i, j: j})
   const update = (arr, start) => actions.push({type: 'UPDATE', arr: arr, start: start})
 
-  Model.runSort(swap, compare, update)
+  Model.runSort(compare, swap, update)
 
   // Loop over sort actions and render for user
   let idx = 0
@@ -42,7 +42,10 @@ Observer.addEvent(Actions.SORT_ARRAY, () => {
     } else if (action.type === 'SWAP') {
       Model.swap(action.i, action.j)
       Observer.emitEvent(Actions.DRAW_BAR_SWAP, [action.i, action.j])
-    } else if (action.type === 'UPDATE') {
+    }
+
+    // Don't wait for updates
+    if (action.type === 'UPDATE') {
       for (let i = 0; i < action.arr.length; i++) {
         Model.array[action.start + i] = action.arr[i]
       }

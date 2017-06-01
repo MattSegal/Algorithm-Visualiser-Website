@@ -14,8 +14,8 @@ module.exports = {
   VAL_INCREMENT: 10,
 
   // Sorting render delay (ms)
-  INITIAL_DELAY: 80,
-  MAX_DELAY: 220,
+  INITIAL_DELAY: 100,
+  MAX_DELAY: 300,
   MIN_DELAY: 40,
   DELAY_INCREMENT: 20,
 }
