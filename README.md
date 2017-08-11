@@ -11,4 +11,4 @@ This is a single page app that displays an unsorted bar chart. The user can sele
 
 * `npm install`
 * `npm run dev`
-* open static/index.html
+* open docs/index.html
